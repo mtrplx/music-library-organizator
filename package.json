@@ -1,0 +1,22 @@
+{
+  "name": "music-library-organizer",
+  "version": "1.0.0",
+  "description": "A Album Organizer app made with ElectronJs",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron main"
+  },
+  "author": "mtrplx",
+  "license": "ISC",
+  "dependencies": {
+    "ajv": "^6.12.6",
+    "nedb-promises": "^4.1.0"
+  },
+  "devDependencies": {
+    "electron": "^10.1.4",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "nodemon": "^2.0.6",
+    "spotify-web-api-node": "^5.0.0"
+  }
+}
