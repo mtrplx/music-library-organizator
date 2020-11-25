@@ -5,3 +5,4 @@ class MusicService {
     }
 
 } 
+module.exports = MusicService;

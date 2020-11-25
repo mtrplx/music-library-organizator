@@ -1,3 +1,5 @@
-const MusicView = require("./src/view/music.view");
-const MusicController = require("./src/controller/music.controller");
-const MusicService = require("./src/service/music.service");
+const musicView = require("./src/view/music.view");
+const musicController = require("./src/controller/music.controller");
+const musicService = require("./src/service/music.service");
+
+const app = new musicController( new musicView(), new musicService())

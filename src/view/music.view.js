@@ -27,6 +27,14 @@ class MusicView {
             this.modalBox.style.display = "none"
         })
     }
+
+    OnLoadEvents () {
+        window.addEventListener('load', () => {
+            console.log("WOEOEOEOEOE")
+            this.OpenModal()
+            this.CloseModal()
+        })
+    }
 }
 
 module.exports = MusicView;

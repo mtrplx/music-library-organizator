@@ -23,6 +23,8 @@ function createWindow () {
 
     Menu.setApplicationMenu(menu);
 
+    mainWindow.webContents.openDevTools()
+
     mainWindow.loadURL('http://localhost:8888/login')
     
 }
