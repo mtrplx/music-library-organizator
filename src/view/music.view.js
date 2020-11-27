@@ -31,19 +31,64 @@ class MusicView {
         })
     }
 
+    ObjLength ( object ) {
+        return Object.keys(object).length
+    }
 
+    NoArtistFound () {
+        let li = window.document.createElement('li')
+        li.textContent = 'No se han encontrado artistas'
+        li.style.fontSize = "large"
+        return li;
+        //console.log('NO ENCUENTRA ARTISTA '+li)
+    }
+
+    chargeAutocomplete ( artists ) {
+
+        let artistsList = [];
+
+        if(this.ObjLength(artists) == 0){
+            console.log('ENTRA')
+            artistsList.push(this.NoArtistFound())
+        }
+
+        //console.log('ARTISTAS '+artists[0].name)
+
+        artists.forEach( (artist) => {
+            let li = window.document.createElement('li');
+            li.id = artist.id;
+            li.textContent = artist.name
+
+            artistsList.push(li);
+        });
+        //console.log('RELLENAR AUTOCOMPLETE '+artistsList[0])
+        return artistsList;
+    }
+
+    FocusOut () {
+        this.ModalInputArtisName.addEventListener('focusout', () => {
+            this.AutoCompleteUl.style.display = "none"
+        })
+    }
 
     OnLoadEvents () {
         window.addEventListener('load', () => {
             this.OpenModal()
             this.CloseModal()
+            this.FocusOut()
         })
     }
 
     OnTypeEvent ( callback ) {
         this.ModalInputArtisName.addEventListener('input', event => {
-            console.log(callback())
-            this.chargeAutocomplete( callback(event.target.value) )
+            this.AutoCompleteUl.innerHTML = "";
+
+            let list = this.chargeAutocomplete( callback(event.target.value.toLowerCase()) )
+          
+            list.forEach( element => {
+                this.AutoCompleteUl.appendChild(element)
+            })
+            this.AutoCompleteUl.style.display = "block"
         })
     }
 }
