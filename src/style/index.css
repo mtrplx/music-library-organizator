@@ -198,3 +198,26 @@ margin-left: 30%;
     width: 50%;
     height: 4%;
 }
+
+.AutoCompleteResults{
+    position:absolute;
+    display: none;
+    z-index: 10;
+    background-color: white;
+    list-style: none;
+    border: solid #A9A9A9 1px;
+    margin-top: -0.1%;
+    width: 20.5%;
+}
+
+.AutoCompleteResults > li {
+    font-size: x-large;
+    margin-top: 10%;
+    margin-left: -16%;
+    border-bottom: solid gray 1px;
+}
+
+.AutoCompleteResults > li:hover {
+    cursor: pointer;
+    color: #A9A9A9;
+}

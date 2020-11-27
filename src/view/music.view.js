@@ -1,3 +1,5 @@
+const  accessibleAutocomplete  = require("accessible-autocomplete");
+
 class MusicView {
     
     constructor () {
@@ -14,6 +16,7 @@ class MusicView {
         this.ModalInputArtisName = window.document.getElementById('ModalInputArtisName');
         this.AddAlbumSelect = window.document.getElementById('AlbumSelect');
         this.AcceptAlbumButton = window.document.getElementById('AcceptButton');
+        this.AutoCompleteUl = window.document.getElementById('AutoCompleteResults')
     }
 
     OpenModal () {
@@ -28,11 +31,19 @@ class MusicView {
         })
     }
 
+
+
     OnLoadEvents () {
         window.addEventListener('load', () => {
-            console.log("WOEOEOEOEOE")
             this.OpenModal()
             this.CloseModal()
+        })
+    }
+
+    OnTypeEvent ( callback ) {
+        this.ModalInputArtisName.addEventListener('input', event => {
+            console.log(callback())
+            this.chargeAutocomplete( callback(event.target.value) )
         })
     }
 }

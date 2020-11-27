@@ -13,6 +13,7 @@
     "nedb-promises": "^4.1.0"
   },
   "devDependencies": {
+    "accessible-autocomplete": "^2.0.3",
     "electron": "^10.1.4",
     "express": "^4.17.1",
     "fs": "0.0.1-security",

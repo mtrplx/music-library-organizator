@@ -9,6 +9,7 @@ class MusicController {
 
     init () {
         this.View.OnLoadEvents()
+        this.View.OnTypeEvent( this.Service.getArtists.bind(this.Service) )
     }
 }
 
