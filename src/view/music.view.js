@@ -17,6 +17,16 @@ class MusicView {
         this.AddAlbumSelect = window.document.getElementById('AlbumSelect');
         this.AcceptAlbumButton = window.document.getElementById('AcceptButton');
         this.AutoCompleteUl = window.document.getElementById('AutoCompleteResults')
+        this.DropdownIcon = window.document.getElementById('dropdown-icon')
+    }
+
+    loadAllAlbums ( albums) {
+        albums.forEach( album => {
+            let ul = window.document.createElement('ul')
+            ul.textContent = album.artist_name+" - "+album.title;
+            ul.id = album.id;
+            //paginacion
+        })
     }
 
     OpenModal () {
@@ -39,6 +49,7 @@ class MusicView {
         let li = window.document.createElement('li')
         li.textContent = 'No se han encontrado artistas'
         li.style.fontSize = "large"
+        li.className = "noHover"
         return li;
         //console.log('NO ENCUENTRA ARTISTA '+li)
     }
@@ -48,7 +59,6 @@ class MusicView {
         let artistsList = [];
 
         if(this.ObjLength(artists) == 0){
-            console.log('ENTRA')
             artistsList.push(this.NoArtistFound())
         }
 
@@ -65,8 +75,14 @@ class MusicView {
         return artistsList;
     }
 
-    FocusOut () {
+ /*   FocusOut () {
         this.ModalInputArtisName.addEventListener('focusout', () => {
+            this.AutoCompleteUl.style.display = "none"
+        })
+    } */
+
+    ToggleSearchDropDown () {
+        this.DropdownIcon.addEventListener('click', () => {
             this.AutoCompleteUl.style.display = "none"
         })
     }
@@ -75,7 +91,8 @@ class MusicView {
         window.addEventListener('load', () => {
             this.OpenModal()
             this.CloseModal()
-            this.FocusOut()
+            this.ToggleSearchDropDown()
+            //this.FocusOut()
         })
     }
 
@@ -86,10 +103,20 @@ class MusicView {
             let list = this.chargeAutocomplete( callback(event.target.value.toLowerCase()) )
           
             list.forEach( element => {
+                element.addEventListener('click', () => {
+                    console.log('ENTRA')
+                    this.ModalInputArtisName.value = element.textContent;
+                    this.ModalInputArtisName.dataset.id = element.id;
+                })
                 this.AutoCompleteUl.appendChild(element)
             })
             this.AutoCompleteUl.style.display = "block"
         })
+    }
+
+
+    onclickAutocomplete () {
+        
     }
 }
 

@@ -3,7 +3,7 @@
         <title>
             Álbumes
         </title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
         <link rel="icon" href="src/media/favicon.ico" type="image/x-icon">
         <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Judson:400,700" rel="stylesheet">
         <link href="src/style/index.css" rel="stylesheet">
@@ -14,36 +14,7 @@
 
         <div class="AlbumsList">
             <li id="AlbumsList">
-                <ul>
-                    5% - MDE CLICK
-                </ul>
-                <ul>
-                    5% - MDE CLICK
-                </ul>
-                <ul>
-                    5% - MDE CLICK
-                </ul>
-                <ul>
-                    5% - MDE CLICK
-                </ul>
-                <ul>
-                    5% - MDE CLICK
-                </ul>
-                <ul>
-                    5% - MDE CLICK
-                </ul>
-                <ul>
-                    5% - MDE CLICK
-                </ul>
-                <ul>
-                    5% - MDE CLICK
-                </ul>
-                <ul>
-                    5% - MDE CLICK
-                </ul>
-                <ul>
-                    5% - MDE CLICK
-                </ul>
+             
             </li>
             <div class="buttons">
                 <input type="button" id="PreviousButton" value="<">
@@ -91,7 +62,7 @@
 
             <div class="modal-content">
               <span id="closeModal" class="close">&times;</span>
-              <input id="ModalInputArtisName" class="ModalInputArtisName" type="text" placeholder="Nombre del artista">
+              <input id="ModalInputArtisName" class="ModalInputArtisName" type="text" placeholder="Nombre del artista" data-id="" ><i class="fas fa-search"></i><i id="dropdown-icon" class="fas fa-caret-down"></i>
               <ul id="AutoCompleteResults" class="AutoCompleteResults">
                   <li>Cruz cafune</li>
                   <li>Cruz cafune</li>
@@ -111,13 +82,13 @@
                 </ul>
               </li>  
              <div class="AcceptModalButton">
-                 <input type="button" value="Aceptar" id="AcceptButton">
+                 <input type="button" value="Aceptar" id="AcceptButton" class="AcceptButton">
              </div>
             </div>
           
         </div>
     </body>
-  <script type="text/javascript" src="assets/js/accessible-autocomplete.min.js"></script>
+
   <script src="app.js"></script>
   <script src="src/view/music.view.js"></script>
   <script src="src/service/music.service.js"></script>

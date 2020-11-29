@@ -9,29 +9,25 @@ class MusicService {
         let SpotifyArtists = [
             {
                 id: 'id01',
-                name:'Cruz Cafune'
+                artist_name:'Cruz Cafune'
             },
             {
                 id: 'id02',
-                name:'Pedro Ladroga'
+                artist_name:'Pedro Ladroga'
             },
             {
                 id: 'id03',
-                name:'Dellafuente'
+                artist_name:'Dellafuente'
             },
             {
                 id: 'id04',
-                name:'Bad Bunny'
+                artist_name:'Bad Bunny'
             },
             {
                 id: 'id05',
-                name:'Kaydy Cain'
+                artist_name:'Kaydy Cain'
             }
         ]
-
-        //console.log('INPUT VALUE '+InputValue)
-
-        //let result = SpotifyArtists.filter( (artist) => artist.name.toLowerCase().includes(InputValue));
         
         let result = [];
 
@@ -41,14 +37,74 @@ class MusicService {
         
         SpotifyArtists.forEach ( artist => {
             
-            if(artist.name.toLowerCase().includes(InputValue)){
+            if(artist.artist_name.toLowerCase().includes(InputValue)){
                 result.push(artist);
             }
         })
 
-        //console.log('SERVICE RESULT'+result)
-
         return result;
+    }
+
+    pagination () {
+        let SpotifyAlbums = [
+            {
+                id: 'al01',
+                artist_name:'Dellafuente',
+                title: 'Descanso en poder'
+            },
+            {
+                id: 'al01',
+                artist_name:'Dellafuente',
+                title: 'Descanso en poder'
+            },
+            {
+                id: 'al01',
+                artist_name:'Dellafuente',
+                title: 'Descanso en poder'
+            },
+            {
+                id: 'al01',
+                artist_name:'Dellafuente',
+                title: 'Descanso en poder'
+            },
+            {
+                id: 'al01',
+                artist_name:'Dellafuente',
+                title: 'Descanso en poder'
+            },
+            {
+                id: 'al01',
+                artist_name:'Dellafuente',
+                title: 'Descanso en poder'
+            },
+            {
+                id: 'al01',
+                artist_name:'Dellafuente',
+                title: 'Descanso en poder'
+            },
+            {
+                id: 'al01',
+                artist_name:'Dellafuente',
+                title: 'Descanso en poder'
+            },
+            {
+                id: 'al01',
+                artist_name:'Dellafuente',
+                title: 'Descanso en poder'
+            },
+            {
+                id: 'al01',
+                artist_name:'Dellafuente',
+                title: 'Descanso en poder'
+            },
+            {
+                id: 'al01',
+                artist_name:'Dellafuente',
+                title: 'Descanso en poder'
+            }
+        ]
+
+        return SpotifyAlbums;
     }
 
 } 

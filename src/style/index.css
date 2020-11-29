@@ -191,6 +191,7 @@ cursor: pointer;
 padding:1%;
 margin-top: 4%;
 margin-left: 30%;
+
 }
 
 .AcceptModalButton > input {
@@ -220,4 +221,34 @@ margin-left: 30%;
 .AutoCompleteResults > li:hover {
     cursor: pointer;
     color: #A9A9A9;
+}
+
+.noHover:hover {
+    color: black !important;
+    cursor: default !important;
+}
+
+.fa-search {
+    margin-left: 5%;
+    color : gray
+}
+
+.fa-search:hover {
+    color: black;
+    cursor: pointer;
+}
+
+.AcceptButton:hover {
+color: #A9A9A9;
+cursor: pointer;
+}
+
+.fa-caret-down{
+    color: gray;
+    margin-left: -25%;
+}
+
+.fa-caret-down:hover {
+    color:black;
+    cursor: pointer;
 }
