@@ -45,7 +45,7 @@ class MusicService {
         return result;
     }
 
-    pagination () {
+    getAlbums () {
         let SpotifyAlbums = [
             {
                 id: 'al01',

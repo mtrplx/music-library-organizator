@@ -96,7 +96,8 @@ body {
     } 
 
 .AddNewAlbum > .AddNewAlbumButton {
-    margin-left: 70%;
+    margin-top: 133%;
+    margin-left: 68%;
     border-radius: 10%;
 }
 
@@ -156,7 +157,7 @@ body {
       display: block;
       position: relative;
       overflow-y: scroll;
-      height: 37%;
+      height: 47%;
   }
 
 .AlbumSelect > ul:hover,
