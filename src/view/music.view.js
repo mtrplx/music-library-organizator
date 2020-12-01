@@ -7,6 +7,7 @@ class MusicView {
         this.PreviousButton = window.document.getElementById('PreviousButton');
         this.NextButton = window.document.getElementById('NextButton');
         this.PageNumber = window.document.getElementById('PageNumber')
+        this.AlbumImg = window.document.getElementById('AlbumImage');
         this.AlbumTitle = window.document.getElementById('AlbumTitle');
         this.AlbumArtist = window.document.getElementById('AlbumArtist');
         this.ReleaseDate = window.document.getElementById('ReleaseDate');
@@ -26,33 +27,32 @@ class MusicView {
         return Math.ceil( this.ObjLength( albums ) / this.records_per_page )
     }
 
-    prevPage ( albums ) {
+    prevPage ( albums, getAlbumInfo ) {
         if(this.current_page > 1) {
             this.current_page--;
-            this.chargePage(this.current_page, albums)
+            this.chargePage(this.current_page, albums, getAlbumInfo)
         }
     }
 
-    nextPage ( albums ) {
+    nextPage ( albums, getAlbumInfo ) {
         if(this.current_page < this.numberOfPages( albums )){
             this.current_page++;
-            this.chargePage(this.current_page, albums)
+            this.chargePage(this.current_page, albums, getAlbumInfo)
         }
     }
 
-    createAlbumUl ( album ) {
+    createAlbumUl ( album, getAlbumInfo ) {
         let ul = window.document.createElement('ul');
         ul.id = album.id;
+        ul.onclick = () => {
+            this.showAlbumInfo( getAlbumInfo() );
+        }
         ul.textContent = album.title+" - "+album.artist_name
         return ul;
     }
-
     
 
-    chargePage ( page, albums ) {
-
-
-        //console.log('ENTRA EN CHARGE PAGE '+ albums )
+    chargePage ( page, albums, getAlbumInfo ) {
 
         if( page < 1) page = 1;
         if( page > this.numberOfPages( albums ) ) page = this.numberOfPages( albums )
@@ -60,7 +60,7 @@ class MusicView {
         this.AlbumsList.innerHTML = "";
 
         for( let i = ( page - 1 ) * this.records_per_page; i < ( page * this.records_per_page ) && i < this.ObjLength( albums ) ; i++ ){
-            this.AlbumsList.appendChild( this.createAlbumUl( albums[i]) )
+            this.AlbumsList.appendChild( this.createAlbumUl( albums[i], getAlbumInfo) )
         }
 
         this.PageNumber.textContent = page;
@@ -69,6 +69,29 @@ class MusicView {
 
         page == this.numberOfPages() ? this.NextButton.style.visibility = 'hidden' : this.NextButton.style.visibility = 'visible'
 
+    }
+
+    clearDetails() {
+        this.AlbumImg.src = "";
+        this.AlbumTitle.textContent = "";
+        this.AlbumArtist.textContent = "";
+        this.ReleaseDate.textContent = "";
+        this.TrackList.innerHTML = "";
+    }
+
+    showAlbumInfo( AlbumInfo ) {
+        this.clearDetails()
+        this.AlbumImg.src = AlbumInfo.album_img;
+        this.AlbumTitle.textContent = AlbumInfo.title;
+        this.AlbumArtist.textContent = AlbumInfo.artist_name;
+        this.ReleaseDate.textContent = AlbumInfo.release_date;
+        let trackNumber = 1;
+        AlbumInfo.tracklist.forEach( track => {
+            let ul = window.document.createElement('ul');
+            ul.textContent = trackNumber+"-"+track;
+            this.TrackList.appendChild(ul)
+            trackNumber++;
+        })
     }
 
     OpenModal () {
@@ -129,25 +152,25 @@ class MusicView {
         })
     }
 
-    OnLoadEvents ( callback ) {
+    OnLoadEvents ( GetAlbumscallback, getAlbumInfoCallback ) {
         window.addEventListener('load', () => {
             this.OpenModal()
             this.CloseModal()
             this.ToggleSearchDropDown()
-            this.chargePage( 1, callback() );
+            this.chargePage( 1, GetAlbumscallback(), getAlbumInfoCallback );
             //this.FocusOut()
         })
     }
 
-    NextPageClick ( callback ) {
+    NextPageClick ( callback, getAlbumInfoCallback ) {
         this.NextButton.addEventListener( 'click', () => {
-            this.nextPage( callback() )
+            this.nextPage( callback(), getAlbumInfoCallback )
         })
     }
 
-    PreviousPageClick ( callback ) {
+    PreviousPageClick ( callback, getAlbumInfoCallback ) {
         this.PreviousButton.addEventListener( 'click' , () => {
-            this.prevPage( callback() )
+            this.prevPage( callback(), getAlbumInfoCallback )
         })
     }
 

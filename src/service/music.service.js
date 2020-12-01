@@ -107,5 +107,27 @@ class MusicService {
         return SpotifyAlbums;
     }
 
+    getAlbumInfo () {
+        return {
+            id : "album_id_01",
+            album_img: "src/media/img/descanso-en-poder.webp",
+            title : "Descanso en poder",
+            artist_name : "Dellafuente",
+            release_date : "5 de junio de 2020",
+            tracklist : [
+                "Intro",
+                "Toco el cielo",
+                "Yalo Yale",
+                "La Recomellía",
+                "Saturación",
+                "Palante y Patrás",
+                "Flores Pa Tu Pelo",
+                "Libertad y Salud",
+                "Pa Que No Te Duermas",
+                "Nubes"
+            ]
+        }
+    }
+
 } 
 module.exports = MusicService;
