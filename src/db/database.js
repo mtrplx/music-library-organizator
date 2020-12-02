@@ -1,38 +1,55 @@
-const DataStore = require('nedb-promises');
-
+const DataStore = require('electron-db');
+const fs = require('fs')
 class Database {
 
     constructor ( DBName ) {
 
-        this.db = DataStore.create({
-            filename : __dirname+'/databases/'+DBName+'.db',
-            autoload : true
-        })
+        this.DBName = DBName;
 
-         this.db.load({
-            filename : __dirname+'/databases/'+DBName+'.db'
-        }) 
-        
+            DataStore.createTable(DBName,__dirname+'/databases/', (success, data) => {
+                console.log(data)
+            })        
+    }
+
+    checkFile (fileName) {
+        return fs.existsSync( 'databases/'+fileName )
+    }
+
+    isValid () {
+        return DataStore.valid( this.DBName, __dirname+'/databases/' )
     }
 
     create ( data ) {
-       return this.db.insert( data )
+       if(this.isValid()){
+            DataStore.insertTableContent( this.DBName, __dirname+'/databases/' , data , ( succ, msg)  => {})
+            return true;
+       }
     }
 
     ReadAll ( ) {
-        return this.db.find().exec()
+         DataStore.getAll( this.DBName, __dirname+'/databases/' , ( success, data ) => {
+            return data;
+        })
     }
 
     ReadOne ( id ) {
-       return this.db.findOne({_id : id})
+       DataStore.search( this.DBName, __dirname+'/databases/' ,'id', id, ( success, data ) => {
+            return data;
+       } )
     }
 
     update ( id, data ) {
-        return this.db.update({_id : id}, {$set : data})
+        console.log(id)
+        console.log(data)
+        DataStore.updateRow( this.DBName, __dirname+'/databases/' , this.ReadOne(id), data, (success, data) => {
+            return success;
+        } )
     }
 
     delete ( id ) {
-        return this.db.remove({_id: id})
+        DataStore.deleteRow( this.DBName, __dirname+'/databases/', { 'id' : id }, (success, data) => {
+                return successç;
+        })
     }
 }
 

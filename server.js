@@ -1,7 +1,14 @@
 const SpotifyWebApi = require('spotify-web-api-node')
-const UserService = require('./src/service/user.service')
-const express = require('express');
 const fs = require('fs')
+
+if(fs.existsSync('./src/db/databases/user.json')){
+  fs.unlinkSync('./src/db/databases/user.json')
+  console.log('Archivo Borrado')
+}  
+const UserService = require('./src/service/user.service')
+
+const express = require('express');
+
 
 const scopes = [
     'ugc-image-upload',
@@ -28,7 +35,7 @@ const scopes = [
 const spotifyApi = new SpotifyWebApi({
   redirectUri : 'http://localhost:8888/callback',
   clientId : '295612aea12349abaf6ce90688a142ff',
-  clientSecret : '153f11af3b6e4704b9cb5cde5ac22184'
+  clientSecret : ''
 })
 
 const app = express();
@@ -60,39 +67,18 @@ app.get('/callback', (req, res) => {
       spotifyApi.setRefreshToken(refresh_token);
 
       let entry = {
-        _id : 'BearerToken',
+        id : "BearerToken",
         access_token : access_token,
         refresh_token : refresh_token,
         expires_in : expires_in,
         authorization_code : code
       }
 
-      if(fs.existsSync('src/db/databases/user.db')){
+         
+      if(UserService.SaveToken( entry )){
+        res.sendFile(__dirname+'/index.html')
+      };
 
-        /*
-        db.user.update({_id : 'BearerToken'},{$set : entry}).then( () => {
-
-          res.sendFile(__dirname + '/index.html') 
-
-        }) */
-
-        console.log('ENTRA')
-
-        UserService.UpdateToken( entry._id, entry).then( () => {
-          res.sendFile(__dirname + '/index.html')
-        })
-
-      }
-     /* db.user.insert( entry ).then( () => {
-
-        res.sendFile(__dirname + '/index.html')
-
-      }) */
-
-      UserService.SaveToken( entry ).then( () => {
-        res.sendFile(__dirname + '/index.html')
-      })
-      
       setInterval(async () => {
         const data = await spotifyApi.refreshAccessToken();
         const access_token = data.body['access_token'];
