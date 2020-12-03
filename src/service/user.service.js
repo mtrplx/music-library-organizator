@@ -10,8 +10,8 @@ class UserService {
         return this.UserDB.create( token )
     }
 
-    getToken ( id ) {
-        return this.UserDB.ReadAll()
+    getToken ( ) {
+        return this.UserDB.ReadAll()[0]
     }   
 
     UpdateToken ( id, data ) {

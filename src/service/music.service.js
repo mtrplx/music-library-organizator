@@ -1,48 +1,55 @@
 class MusicService {
 
-    constructor () {
-        
+    constructor ( spotifyService, albumsdb, artistsdb ) {
+        this.spotifyService = spotifyService;
+        this.albumsdb = albumsdb;
+        this.artistsdb = artistsdb;
     }
 
-    getArtists ( InputValue ) {
+    formatArtistResponse ( response ) {
 
-        let SpotifyArtists = [
-            {
-                id: 'id01',
-                artist_name:'Cruz Cafune'
-            },
-            {
-                id: 'id02',
-                artist_name:'Pedro Ladroga'
-            },
-            {
-                id: 'id03',
-                artist_name:'Dellafuente'
-            },
-            {
-                id: 'id04',
-                artist_name:'Bad Bunny'
-            },
-            {
-                id: 'id05',
-                artist_name:'Kaydy Cain'
-            }
-        ]
-        
         let result = [];
 
-        if(InputValue == "") {
-            return result;
-        }
-        
-        SpotifyArtists.forEach ( artist => {
-            
-            if(artist.artist_name.toLowerCase().includes(InputValue)){
-                result.push(artist);
-            }
+        response.body.artists.items.forEach( artist => {
+            result.push({
+                id : artist.id,
+                name : artist.name
+            })
         })
 
         return result;
+    }
+
+   async getArtists ( InputValue ) {
+
+        let response = await this.spotifyService.SearchArtists( InputValue );
+        
+        response =  this.formatArtistResponse( response )
+
+        return response 
+       
+    }
+
+    formatNewAlbums ( response ) {
+        let result = [];
+
+        response.body.items.forEach( album => {
+            result.push({
+                id : album.id,
+                name : album.name,
+                img : album.images[2].url 
+            })
+        })
+
+        return result;
+    }
+
+    async getArtisAlbums ( id ) {
+        let response = await this.spotifyService.SearchArtistsAlbums( id );
+
+        response = this.formatNewAlbums ( response )
+
+        return response;
     }
 
     getAlbums () {

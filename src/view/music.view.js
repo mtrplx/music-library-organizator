@@ -20,6 +20,7 @@ class MusicView {
         this.AcceptAlbumButton = window.document.getElementById('AcceptButton');
         this.AutoCompleteUl = window.document.getElementById('AutoCompleteResults')
         this.DropdownIcon = window.document.getElementById('dropdown-icon')
+        this.searchButton = window.document.getElementById('searchButton')
         this.current_page = 1;
         this.records_per_page = 10;
     }
@@ -132,7 +133,7 @@ class MusicView {
         artists.forEach( (artist) => {
             let li = window.document.createElement('li');
             li.id = artist.id;
-            li.textContent = artist.artist_name
+            li.textContent = artist.name
 
             artistsList.push(li);
         });
@@ -140,11 +141,33 @@ class MusicView {
         return artistsList;
     }
 
- /*   FocusOut () {
-        this.ModalInputArtisName.addEventListener('focusout', () => {
-            this.AutoCompleteUl.style.display = "none"
+    createArtistAlbumsList ( albums ) {
+        this.AddAlbumSelect.innerHTML = ""
+        albums.forEach( album => {
+            let ul = window.document.createElement('ul');
+            let img = window.document.createElement('img');
+            img.id = "AlbumImg";
+            img.src = album.img;
+            let label = window.document.createElement('label');
+            label.for = 'AlbumImg';
+            label.textContent = album.name;
+            label.id = album.id;
+            ul.id = album.id;
+            ul.appendChild(img)
+            ul.appendChild(label)
+            this.AddAlbumSelect.appendChild(ul)
         })
-    } */
+    }
+
+    SearchArtistAlbums ( callback ) {
+        this.searchButton.addEventListener( 'click', async () => {
+            let id = this.ModalInputArtisName.dataset.id;
+
+            let albums = await callback( id )
+
+            this.createArtistAlbumsList( albums )
+        })
+    }
 
     ToggleSearchDropDown () {
         this.DropdownIcon.addEventListener('click', () => {
@@ -174,17 +197,24 @@ class MusicView {
         })
     }
 
-    OnTypeEvent ( callback ) {
-        this.ModalInputArtisName.addEventListener('input', event => {
+     OnTypeEvent ( callback ) {
+        this.ModalInputArtisName.addEventListener('input', async event => {
+
             this.AutoCompleteUl.innerHTML = "";
 
-            let list = this.chargeAutocomplete( callback(event.target.value.toLowerCase()) )
+
+            let callbackResult = await callback(event.target.value.toLowerCase());
+
+            console.log(callbackResult)
+
+            let list = this.chargeAutocomplete( callbackResult )
           
             list.forEach( element => {
                 element.addEventListener('click', () => {
-                    console.log('ENTRA')
+                    
                     this.ModalInputArtisName.value = element.textContent;
                     this.ModalInputArtisName.dataset.id = element.id;
+                    this.AutoCompleteUl.style.display = "none"
                 })
                 this.AutoCompleteUl.appendChild(element)
             })
@@ -192,10 +222,6 @@ class MusicView {
         })
     }
 
-
-    onclickAutocomplete () {
-        
-    }
 }
 
 module.exports = MusicView;

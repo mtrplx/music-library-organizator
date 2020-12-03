@@ -27,29 +27,29 @@ class Database {
     }
 
     ReadAll ( ) {
+        let result;
          DataStore.getAll( this.DBName, __dirname+'/databases/' , ( success, data ) => {
-            return data;
+            result = data;
         })
+        return result;
     }
 
     ReadOne ( id ) {
+        let result;
        DataStore.search( this.DBName, __dirname+'/databases/' ,'id', id, ( success, data ) => {
-            return data;
+            result = data;
        } )
+       return result;
     }
 
     update ( id, data ) {
-        console.log(id)
-        console.log(data)
-        DataStore.updateRow( this.DBName, __dirname+'/databases/' , this.ReadOne(id), data, (success, data) => {
-            return success;
-        } )
+        DataStore.updateRow( this.DBName, __dirname+'/databases/' , this.ReadOne(id), data, () => {})
+        return true;
     }
 
     delete ( id ) {
-        DataStore.deleteRow( this.DBName, __dirname+'/databases/', { 'id' : id }, (success, data) => {
-                return successç;
-        })
+        DataStore.deleteRow( this.DBName, __dirname+'/databases/', { 'id' : id }, () => {})
+        return true;
     }
 }
 

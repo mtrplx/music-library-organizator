@@ -4,10 +4,21 @@ const SpotifyWebApi = require('spotify-web-api-node')
 class SpotifyService {
 
     constructor ( ) {
-        this.client_id = "295612aea12349abaf6ce90688a142ff";
-        this.client_secret = "";
+        this.SpotifyApi = new SpotifyWebApi();
+        console.log('ACCESS TOKEN EN CONSTRUCTOR '+ UserService.getToken().access_token )
+        this.SpotifyApi.setAccessToken( UserService.getToken().access_token)
+    }
 
-        this.UserService = new UserService();
+    async SearchArtists( input ) {
+        const artists = await this.SpotifyApi.searchArtists( input,{limit:10});
+            
+        return artists;
+    }
+
+    async SearchArtistsAlbums ( ArtistID ) {
+        const albums = await this.SpotifyApi.getArtistAlbums( ArtistID,{ album_type:'album'});
+
+        return albums;
     }
 
 

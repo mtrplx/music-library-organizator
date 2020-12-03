@@ -12,6 +12,7 @@ class MusicController {
         this.View.OnTypeEvent( this.Service.getArtists.bind( this.Service ) )
         this.View.NextPageClick( this.Service.getAlbums.bind( this.Service ), this.Service.getAlbumInfo.bind(this.Service) )
         this.View.PreviousPageClick( this.Service.getAlbums.bind( this.Service ), this.Service.getAlbumInfo.bind(this.Service) )
+        this.View.SearchArtistAlbums( this.Service.getArtisAlbums.bind(this.Service) )
     }
 }
 
