@@ -12,7 +12,7 @@ body {
    }
    .AlbumsList > li {
        font-size: x-large;
-       margin-top: 5%;
+       margin-top: -3%;
        margin-left: 6%;
        width: 37%;
        color: gray;
@@ -210,13 +210,13 @@ margin-left: 30%;
     background-color: white;
     list-style: none;
     border: solid #A9A9A9 1px;
-    margin-top: -0.1%;
+    margin-top: -3%;
     width: 20.5%;
 }
 
 .AutoCompleteResults > li {
     font-size: x-large;
-    margin-top: 10%;
+    margin-top: 5%;
     margin-left: -16%;
     border-bottom: solid gray 1px;
 }
@@ -253,5 +253,17 @@ cursor: pointer;
 
 .fa-caret-down:hover {
     color:black;
+    cursor: pointer;
+}
+
+  
+.fa-sync-alt {
+    margin-top: -5%;
+    margin-left: 26%;
+    color: #A9A9A9;
+}
+
+.fa-sync-alt:hover {
+    color: black;
     cursor: pointer;
 }

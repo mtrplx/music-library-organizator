@@ -4,7 +4,7 @@
   "description": "A Album Organizer app made with ElectronJs",
   "main": "app.js",
   "scripts": {
-    "start": "electron main"
+    "start": "node server.js | electron main"
   },
   "author": "mtrplx",
   "license": "ISC",
@@ -15,9 +15,11 @@
   "devDependencies": {
     "accessible-autocomplete": "^2.0.3",
     "electron": "^10.1.4",
+    "electron-db": "^0.15.7",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "nodemon": "^2.0.6",
+    "notiflix": "^2.6.0",
     "spotify-web-api-node": "^5.0.0"
   }
 }

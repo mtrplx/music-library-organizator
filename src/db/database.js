@@ -34,9 +34,9 @@ class Database {
         return result;
     }
 
-    ReadOne ( id ) {
+    ReadOne ( id, field ) {
         let result;
-       DataStore.search( this.DBName, __dirname+'/databases/' ,'id', id, ( success, data ) => {
+       DataStore.search( this.DBName, __dirname+'/databases/' , field, id, ( success, data ) => {
             result = data;
        } )
        return result;
@@ -48,7 +48,7 @@ class Database {
     }
 
     delete ( id ) {
-        DataStore.deleteRow( this.DBName, __dirname+'/databases/', { 'id' : id }, () => {})
+        DataStore.deleteRow( this.DBName, __dirname+'/databases/', { 'album_id' : id }, () => {})
         return true;
     }
 }

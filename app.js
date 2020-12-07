@@ -4,4 +4,4 @@ const musicService = require("./src/service/music.service");
 const spotifyservice = require("./src/service/spotify.service")
 const database = require('./src/db/database')
 
-const app = new musicController( new musicView(), new musicService( spotifyservice, new database('albums'), new database('artists')))
+const app = new musicController( new musicView( ), new musicService( spotifyservice, new database('albums'), new database('artists')))

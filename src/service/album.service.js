@@ -1,41 +1,17 @@
 class AlbumService {
 
-    constructor ( AlbumStore, ArtistStore ) {
-        this.AlbumStore = AlbumStore;
-        this.ArtistStore = ArtistStore;
+    constructor ( albumsdb ) {
+        this.albumsdb = albumsdb;
     }
 
-    getAlbumsAndArtists (  ) {
-        this.AlbumStore.getAllAlbums().then( albums => {
+    async getAlbums () {
+        let result = await this.albumsdb.ReadAll();
 
-            let data = []; 
-
-            albums.forEach( album => {
-                data += {
-                    id : album.id,
-                    name : album.name,
-                    artist : this.getArtistById( album.artistId )
-                } 
-            });
-            return data;
-        })
+        return result;
     }
 
-    GetAllArtists ( ) {
-        this.ArtistStore.GetAllArtists().then( artists => {
-            return artists
-        })
-    }
-
-    getArtistById ( id ) {
-
-        let artists = this.GetAllArtists();
-
-        artists.forEach( artist => {
-            if(artist.id == id) {
-                return artist.name
-            }
-        })
+    deleteElement ( album_id ) {
+        this.albumsdb.delete( album_id )
     }
 }
 

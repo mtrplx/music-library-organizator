@@ -2,7 +2,7 @@ const  accessibleAutocomplete  = require("accessible-autocomplete");
 
 class MusicView {
     
-    constructor () {
+    constructor ( ) {
         this.AlbumsList = window.document.getElementById('AlbumsList');
         this.PreviousButton = window.document.getElementById('PreviousButton');
         this.NextButton = window.document.getElementById('NextButton');
@@ -21,6 +21,10 @@ class MusicView {
         this.AutoCompleteUl = window.document.getElementById('AutoCompleteResults')
         this.DropdownIcon = window.document.getElementById('dropdown-icon')
         this.searchButton = window.document.getElementById('searchButton')
+        this.AlbumTypeSelect = window.document.getElementById('AlbumType')
+        this.notify = window.document.getElementById('notify')
+        this.notifyType = window.document.getElementById('notifyType')
+        this.reloadButton = window.document.getElementById('reload')
         this.current_page = 1;
         this.records_per_page = 10;
     }
@@ -44,11 +48,12 @@ class MusicView {
 
     createAlbumUl ( album, getAlbumInfo ) {
         let ul = window.document.createElement('ul');
-        ul.id = album.id;
-        ul.onclick = () => {
-            this.showAlbumInfo( getAlbumInfo() );
+        ul.id = album.album_id;
+        ul.onclick = async () => {
+            let result = await getAlbumInfo( ul.id );
+            this.showAlbumInfo( result );
         }
-        ul.textContent = album.title+" - "+album.artist_name
+        ul.textContent = album.title+" - "+album.artist
         return ul;
     }
     
@@ -82,12 +87,13 @@ class MusicView {
 
     showAlbumInfo( AlbumInfo ) {
         this.clearDetails()
-        this.AlbumImg.src = AlbumInfo.album_img;
+
+        this.AlbumImg.src = AlbumInfo.image;
         this.AlbumTitle.textContent = AlbumInfo.title;
-        this.AlbumArtist.textContent = AlbumInfo.artist_name;
+        this.AlbumArtist.textContent = AlbumInfo.artist;
         this.ReleaseDate.textContent = AlbumInfo.release_date;
         let trackNumber = 1;
-        AlbumInfo.tracklist.forEach( track => {
+        AlbumInfo.tracks.forEach( track => {
             let ul = window.document.createElement('ul');
             ul.textContent = trackNumber+"-"+track;
             this.TrackList.appendChild(ul)
@@ -117,7 +123,6 @@ class MusicView {
         li.style.fontSize = "large"
         li.className = "noHover"
         return li;
-        //console.log('NO ENCUENTRA ARTISTA '+li)
     }
 
     chargeAutocomplete ( artists ) {
@@ -128,8 +133,6 @@ class MusicView {
             artistsList.push(this.NoArtistFound())
         }
 
-        //console.log('ARTISTAS '+artists[0].name)
-
         artists.forEach( (artist) => {
             let li = window.document.createElement('li');
             li.id = artist.id;
@@ -137,8 +140,14 @@ class MusicView {
 
             artistsList.push(li);
         });
-        //console.log('RELLENAR AUTOCOMPLETE '+artistsList[0])
+
         return artistsList;
+    }
+
+    changeListElementsBackgroundColor( color ) {
+        this.AddAlbumSelect.querySelectorAll('ul').forEach( element => {
+            element.style.backgroundColor = color;
+        })
     }
 
     createArtistAlbumsList ( albums ) {
@@ -155,6 +164,11 @@ class MusicView {
             ul.id = album.id;
             ul.appendChild(img)
             ul.appendChild(label)
+            ul.onclick = () => {
+                this.changeListElementsBackgroundColor('white')
+                ul.style.backgroundColor = "blue"
+                this.AcceptAlbumButton.dataset.album_id = ul.id;
+            }
             this.AddAlbumSelect.appendChild(ul)
         })
     }
@@ -162,8 +176,8 @@ class MusicView {
     SearchArtistAlbums ( callback ) {
         this.searchButton.addEventListener( 'click', async () => {
             let id = this.ModalInputArtisName.dataset.id;
-
-            let albums = await callback( id )
+            let albumType = this.AlbumTypeSelect.value;
+            let albums = await callback( id, albumType )
 
             this.createArtistAlbumsList( albums )
         })
@@ -181,7 +195,28 @@ class MusicView {
             this.CloseModal()
             this.ToggleSearchDropDown()
             this.chargePage( 1, GetAlbumscallback(), getAlbumInfoCallback );
-            //this.FocusOut()
+        })
+    }
+
+   async chargeAlbumDetail ( getFirstAlbumCallback ) {
+       window.addEventListener('load', async () => {
+        let album = await getFirstAlbumCallback()
+        if(!album){
+            this.showAlbumInfo({
+                title : 'No hay álbumes añadidos',
+                artist : 'No hay álbumes añadidos',
+                release_date : 'No hay álbumes añadidos'
+            })
+        }
+        this.showAlbumInfo( album )
+       })
+        
+    }
+
+    RelaodPage ( GetAlbumscallback, getAlbumInfoCallback ){
+        this.reloadButton.addEventListener('click', () => {
+            this.current_page = 1;
+            this.chargePage( 1, GetAlbumscallback(), getAlbumInfoCallback );
         })
     }
 
@@ -205,8 +240,6 @@ class MusicView {
 
             let callbackResult = await callback(event.target.value.toLowerCase());
 
-            console.log(callbackResult)
-
             let list = this.chargeAutocomplete( callbackResult )
           
             list.forEach( element => {
@@ -215,10 +248,32 @@ class MusicView {
                     this.ModalInputArtisName.value = element.textContent;
                     this.ModalInputArtisName.dataset.id = element.id;
                     this.AutoCompleteUl.style.display = "none"
+                    this.searchButton.disabled = false;
                 })
                 this.AutoCompleteUl.appendChild(element)
             })
             this.AutoCompleteUl.style.display = "block"
+        })
+    }
+
+    showSuccessNotification(){
+        setTimeout(function() { alert("Álbum guardado correctamente"); }, 1000);
+    }
+
+    showFailureNotification(){
+        setTimeout(function() { alert("Error. Ha habido un problema guardando el álbum"); }, 1000);
+    }
+
+    sendAlbumToSave( callback, GetAlbumscallback, getAlbumInfoCallback ){
+        this.AcceptAlbumButton.addEventListener('click', () => {
+            this.modalBox.style.display = "none"
+            if(callback( this.AcceptAlbumButton.dataset.album_id )){
+                this.showSuccessNotification();
+                this.current_page = 1;
+                this.chargePage( 1, GetAlbumscallback(), getAlbumInfoCallback );
+                return;
+            }
+            this.showFailureNotification();
         })
     }
 

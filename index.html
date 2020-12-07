@@ -10,7 +10,7 @@
     </head>
 
     <body>
-        <h1>TUS ÁLBUMES</h1>
+        <h1>TUS ÁLBUMES</h1><i id="reload" class="fas fa-sync-alt"></i>
 
         <div class="AlbumsList">
             <li id="AlbumsList">
@@ -24,34 +24,24 @@
         </div>
 
         <div class="AlbumDetails">
-            <img src="src/media/img/maracucho.jpeg" id="AlbumImage" class="Image">
+            <img src="" id="AlbumImage" class="Image">
             <div class="AlbumTitle">
                 <h2>Título</h2>
-                <label id="AlbumTitle">Maracucho Bueno Muere Chiquito</label>
+                <label id="AlbumTitle"></label>
             </div>
             <div class="AlbumArtist">
                 <h2>Artista</h2>
-                <label id="AlbumArtist">Cruz Cafuné</label>
+                <label id="AlbumArtist"></label>
             </div>
             <div class="ReleaseDate">
                 <h2>Fecha de salida</h2>
-                <label id="ReleaseDate">16 de Marzo de 2018</label>
+                <label id="ReleaseDate"></label>
             </div>
             <div class="Tracklist">
                 <h3 class="title">Pistas:</h3>
                 <div class="tracklistList">
                    <li id="TrackList">
-                       <ul>1. Maracucho Bueno Muere Chiquito</ul>
-                       <ul>1. Maracucho Bueno Muere Chiquito</ul>
-                       <ul>1. Maracucho Bueno Muere Chiquito</ul>
-                       <ul>1. Maracucho Bueno Muere Chiquito</ul>
-                       <ul>1. Maracucho Bueno Muere Chiquito</ul>
-                       <ul>1. Maracucho Bueno Muere Chiquito</ul>
-                       <ul>1. Maracucho Bueno Muere Chiquito</ul>
-                       <ul>1. Maracucho Bueno Muere Chiquito</ul>
-                       <ul>1. Maracucho Bueno Muere Chiquito</ul>
-                       <ul>1. Maracucho Bueno Muere Chiquito</ul>
-                       <ul>1. Maracucho Bueno Muere Chiquito</ul>
+                     
                    </li>
                 </div>
             </div>
@@ -63,7 +53,13 @@
 
             <div class="modal-content">
               <span id="closeModal" class="close">&times;</span>
-              <input id="ModalInputArtisName" class="ModalInputArtisName" type="text" placeholder="Nombre del artista" data-id="" ><i id="searchButton" class="fas fa-search"></i><i id="dropdown-icon" class="fas fa-caret-down"></i>
+              <input id="ModalInputArtisName" class="ModalInputArtisName" type="text" placeholder="Nombre del artista" data-id="" ><i id="searchButton" class="fas fa-search" disabled></i><i id="dropdown-icon" class="fas fa-caret-down"></i>
+              <br><br>
+              <select id="AlbumType">
+                  <option value="album">Album</option>
+                  <option value="compilation">Recopilación</option>
+                  <option value="single">Single</option>
+              </select>
               <ul id="AutoCompleteResults" class="AutoCompleteResults">
               </ul>
               <br><br> 
@@ -76,6 +72,7 @@
             </div>
           
         </div>
+       
     </body>
 
   <script src="app.js"></script>

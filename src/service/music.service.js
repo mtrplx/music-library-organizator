@@ -44,96 +44,66 @@ class MusicService {
         return result;
     }
 
-    async getArtisAlbums ( id ) {
-        let response = await this.spotifyService.SearchArtistsAlbums( id );
+    async getArtisAlbums ( id, albumType ) {
+        let response = await this.spotifyService.SearchArtistsAlbums( id, albumType );
 
         response = this.formatNewAlbums ( response )
 
         return response;
     }
 
-    getAlbums () {
-        let SpotifyAlbums = [
-            {
-                id: 'al01',
-                artist_name:'Dellafuente',
-                title: 'Descanso en poder'
-            },
-            {
-                id: 'al01',
-                artist_name:'Dellafuente',
-                title: 'Descanso en poder'
-            },
-            {
-                id: 'al01',
-                artist_name:'Dellafuente',
-                title: 'Descanso en poder'
-            },
-            {
-                id: 'al01',
-                artist_name:'Dellafuente',
-                title: 'Descanso en poder'
-            },
-            {
-                id: 'al01',
-                artist_name:'Dellafuente',
-                title: 'Descanso en poder'
-            },
-            {
-                id: 'al01',
-                artist_name:'Dellafuente',
-                title: 'Descanso en poder'
-            },
-            {
-                id: 'al01',
-                artist_name:'Dellafuente',
-                title: 'Descanso en poder'
-            },
-            {
-                id: 'al01',
-                artist_name:'Dellafuente',
-                title: 'Descanso en poder'
-            },
-            {
-                id: 'al01',
-                artist_name:'Dellafuente',
-                title: 'Descanso en poder'
-            },
-            {
-                id: 'al01',
-                artist_name:'Dellafuente',
-                title: 'Descanso en poder'
-            },
-            {
-                id: 'al01',
-                artist_name:'Dellafuente',
-                title: 'Descanso en poder'
-            }
-        ]
+    async saveAlbum( album_id ) {
+        let response = await this.spotifyService.GetAlbum( album_id )
 
-        return SpotifyAlbums;
+        await this.spotifyService.addAlbumToLibrary( album_id )
+
+         response = this.formatAlbumData( response )
+
+         return this.albumsdb.create( response )
     }
 
-    getAlbumInfo () {
+    formatAlbumData( album ){
         return {
-            id : "album_id_01",
-            album_img: "src/media/img/descanso-en-poder.webp",
-            title : "Descanso en poder",
-            artist_name : "Dellafuente",
-            release_date : "5 de junio de 2020",
-            tracklist : [
-                "Intro",
-                "Toco el cielo",
-                "Yalo Yale",
-                "La Recomellía",
-                "Saturación",
-                "Palante y Patrás",
-                "Flores Pa Tu Pelo",
-                "Libertad y Salud",
-                "Pa Que No Te Duermas",
-                "Nubes"
-            ]
+            album_id : album.body.id,
+            artist : album.body.artists[0].name,
+            title : album.body.name,
+            release_date : album.body.release_date,
+            image : album.body.images[0].url
         }
+    }
+
+    getAlbums () {
+        return this.albumsdb.ReadAll()
+    }
+
+    getTracksFromResponse( response ){
+        let result = []
+        response.body.tracks.items.forEach( track => {
+            result.push( track.name )
+        })
+        return result;
+    }
+
+   async getAlbumInfo ( album_id ) {
+        let response = await this.spotifyService.GetAlbum( album_id )
+
+        let tracks = this.getTracksFromResponse( response )
+
+        response = this.albumsdb.ReadOne( album_id, 'album_id' )
+
+        response[0].tracks = tracks;
+
+        return response[0] 
+    }
+
+     async getFirstAlbum () {
+         if(this.albumsdb.ReadAll().length == 0) {
+             return
+         }
+         
+        let response = this.albumsdb.ReadAll()[0].album_id;
+
+       return await this.getAlbumInfo( response )
     }
 
 } 

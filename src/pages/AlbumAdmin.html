@@ -1,20 +1,29 @@
 <html>
     <head>
        <title>Administrar Albums</title>
+       <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+       <link rel="icon" href="src/media/favicon.ico" type="image/x-icon">
+       <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Judson:400,700" rel="stylesheet">
+       <link rel="stylesheet" type="text/css" href="../style/AlbumAdmin.css">
     </head>
     <body>
-        <h1>Administrar albums</h1>
-        <table id="AlbumsTable">
-            <tr>
-                <th>Album</th>
-                <th>Artista</th>
-            </tr>
-        </table>
+        <h1>Administrar álbumes</h1>
+        <table>
+            <thead>
+              <tr>
+                <th scope="col">Título del album</th>
+                <th scope="col">Artistas</th>
+                <th scope="col">Borrar</th>
+              </tr>
+            </thead>
+            <tbody id="table">
+     
+            </tbody>
+          </table>
     </body>
     <script src="AlbumApp.js"></script>
     <script src="../db/database.js"></script>
     <script src="../view/album.view.js"></script>
     <script src="../service/album.service.js"></script>
-    <script src="../db/store/albums.store.js"></script>
     <script src="../controller/album.controller.js"></script>
 </html>

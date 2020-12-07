@@ -3,8 +3,7 @@ const { app, BrowserWindow, Menu } = require('electron')
 const template = [{
     label : 'Opciones',
     submenu : [
-        { label : 'Administrar Albumes', click(){ openWindow('src/pages/AlbumAdmin.html','Administrar Albumes') } },
-        { label : 'Administrar Artistas', click(){ openWindow('src/pages/ArtistAdmin.html', 'Adminstrar Artistas') } },
+        { label : 'Administrar Álbumes', click(){ openWindow('src/pages/AlbumAdmin.html','Administrar Álbumes') } },
         { label:'Salir' , click(){ app.quit() } }
     ]
 }]
@@ -23,7 +22,6 @@ function createWindow () {
 
     Menu.setApplicationMenu(menu);
 
-    mainWindow.webContents.openDevTools()
 
     mainWindow.loadURL('http://localhost:8888/login')
     
@@ -48,7 +46,6 @@ function openWindow(path, title) {
     }
   })
 
- newWindow.webContents.openDevTools()
 
   newWindow.menuBarVisible = false;
 
