@@ -1,4 +1,2 @@
 node_modules
-/src/db/databases/user.db
-spotify_secret_key
 .vscode
