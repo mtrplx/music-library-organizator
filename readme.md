@@ -8,6 +8,7 @@
 ### Pre-requisitos
   - Tener instalado [npm](https://www.npmjs.com/)
   - Tener instalado [node.js](https://nodejs.org/es/)
+  - Crear una carpeta "databases" dentro de src/db/
 
 ### Puesta en marcha
 
