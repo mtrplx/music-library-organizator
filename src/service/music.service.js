@@ -1,9 +1,8 @@
 class MusicService {
 
-    constructor ( spotifyService, albumsdb, artistsdb ) {
+    constructor ( spotifyService, albumsdb ) {
         this.spotifyService = spotifyService;
         this.albumsdb = albumsdb;
-        this.artistsdb = artistsdb;
     }
 
     formatArtistResponse ( response ) {

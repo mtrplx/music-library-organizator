@@ -23,11 +23,11 @@ $ npm run start
 y la aplicación se iniciará.
 ### Utilización
 
-Para utilizar la aplicación deberás inicar sesión con tu cuenta de Spotify.
+Para utilizar la aplicación deberás iniciar sesión con tu cuenta de Spotify.
 Para agregar el primer álbum, una vez iniciada la sesión, deberas darle al botón 'Agregar nuevo álbum'
 ![Captura1](src/media/img/captura1.png)
 
-Introducimo el nombre del artista del álbum que queramos añadir y pulsamos la lupa.
+Introducimos el nombre del artista del álbum que queramos añadir y pulsamos sobre la lupa.
 También se deberá introducir el formato. Luego seleccionaremos el disco que queramos añadir y pulsamos aceptar.
 ![Captura2](src/media/img/captura2.png)
 
